@@ -1,0 +1,47 @@
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background-color: #f4f4f9;
+    padding: 20px;
+}
+
+.booth-wrapper {
+    position: relative;
+    width: 640px;
+    height: 480px;
+    margin: 0 auto;
+    border: 5px solid #333;
+    background: #000;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1); /* Efek Mirror */
+}
+
+#frame-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; /* Supaya tidak menghalangi klik */
+    border: 20px solid rgba(255, 255, 255, 0.3); /* Contoh frame sederhana */
+}
+
+#countdown {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: white;
+    font-weight: bold;
+}
+
+.controls { margin-top: 20px; }
+
+#final-image {
+    max-width: 100%;
+    margin-top: 10px;
+    border: 10px solid white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
