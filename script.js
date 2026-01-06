@@ -102,11 +102,11 @@ function takeSnapshot() {
 async function drawFinalStrip() {
     const ctx = canvas.getContext('2d');
     
-    // Set ukuran canvas sesuai ukuran file frame PNG kamu
+    // Pastikan ukuran canvas sinkron dengan ukuran file frame PNG
     canvas.width = frameImg.width;   
     canvas.height = frameImg.height;
 
-    // 1. Bersihkan canvas (opsional tapi baik untuk performa)
+    // 1. Bersihkan canvas total
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // 2. Tentukan posisi lubang foto (Sesuaikan dengan desain frame kamu)
@@ -117,28 +117,45 @@ async function drawFinalStrip() {
         { x: 40, y: 1220, w: 520, h: 390 } 
     ];
 
-    // 3. GAMBAR FOTO TERLEBIH DAHULU (Di lapisan bawah)
+    // 3. GAMBAR FOTO (Lapisan Bawah)
     for (let i = 0; i < capturedPhotos.length; i++) {
         const img = new Image();
         img.src = capturedPhotos[i];
-        await new Promise(r => img.onload = r);
-
-        const pos = photoPositions[i];
         
-        ctx.save();
-        // Efek filter hanya untuk foto, bukan untuk frame
-        ctx.filter = currentFilter; 
-        ctx.drawImage(img, pos.x, pos.y, pos.w, pos.h);
-        ctx.restore();
+        await new Promise(resolve => {
+            img.onload = () => {
+                const pos = photoPositions[i];
+                
+                ctx.save(); // Simpan kondisi bersih
+                
+                // --- PAKSA FILTER DI SINI ---
+                ctx.filter = currentFilter; 
+                
+                // Gambar foto ke area transparan frame
+                ctx.drawImage(img, pos.x, pos.y, pos.w, pos.h);
+                
+                ctx.restore(); // Kembalikan ke kondisi tanpa filter (supaya frame tidak ikut ter-filter)
+                resolve();
+            };
+        });
     }
 
-    // 4. GAMBAR FRAME PNG TERAKHIR (Di lapisan atas/overlay)
-    // Karena frame digambar terakhir, bagian transparan di frame akan memperlihatkan foto di bawahnya
+    // 4. GAMBAR FRAME (Lapisan Atas)
+    // Penting: Reset filter ke 'none' sebelum gambar frame agar warna frame asli tidak berubah
+    ctx.filter = "none";
     ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
 
-    // 5. Generate Hasil Akhir
+    // 5. Finishing - Teks Footer (Opsional dengan Poppins)
+    await document.fonts.ready;
+    ctx.fillStyle = "#3a2a22"; // Jiwani Dark
+    ctx.textAlign = "center";
+    ctx.font = "bold 24px Poppins";
+    // Gunakan posisi dinamis berdasarkan lebar frame
+    // ctx.fillText("Jiwani Coffee Moments", canvas.width / 2, canvas.height - 60);
+
+    // 6. Generate Hasil Akhir
     const finalData = canvas.toDataURL('image/png');
     finalImage.src = finalData;
     downloadBtn.href = finalData;
-    downloadBtn.download = "jiwani_coffee_photobooth.png";
+    downloadBtn.download = "jiwani_coffee_result.png";
 }
