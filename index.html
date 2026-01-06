@@ -9,41 +9,41 @@
 <body>
 
     <div class="container">
-        <h1>📸 YO! Testter brouw. enjoyyyy</h1>
-        
-      <div class="booth-wrapper" id="booth-container">
-    <video id="video" autoplay playsinline></video>
-    <div id="frame-overlay"></div>
-    <div id="countdown"></div>
-    <div id="flash-effect"></div>
-</div>
+        <div id="camera-screen">
+            <h1>☕ Online Free Photo Booth</h1>
+            
+            <div class="booth-wrapper">
+                <video id="video" autoplay playsinline></video>
+                <div id="frame-overlay"></div>
+                <div id="countdown"></div>
+                <div id="flash-effect"></div>
+            </div>
 
-        <div class="filter-controls">
-        <label>Pilih Filter: </label>
-        <button class="filter-btn active" data-filter="none">Normal</button>
-        <button class="filter-btn" data-filter="grayscale(100%)">B&W</button>
-        <button class="filter-btn" data-filter="sepia(100%)">Sepia</button>
-        <button class="filter-btn" data-filter="contrast(150%)">High Contrast</button>
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="none">Normal</button>
+                <button class="filter-btn" data-filter="grayscale(100%)">B&W</button>
+                <button class="filter-btn" data-filter="sepia(100%)">Sepia</button>
+                <button class="filter-btn" data-filter="contrast(150%)">Retro</button>
+                <button class="filter-btn" data-filter="hue-rotate(90deg)">Neon</button>
+                <button class="filter-btn" data-filter="brightness(1.3) saturate(1.5)">Warm</button>
+            </div>
+
+            <button id="start-btn">Mulai Foto (4x cekrek ya)</button>
+        </div>
+
+        <div id="result-screen" style="display: none;">
+            <h1>Hasil Foto Kamu</h1>
+            <div id="result-container">
+                <img id="final-image" src="" alt="Hasil Akhir">
+            </div>
+            <div class="controls">
+                <a id="download-btn" class="btn-download">Simpan Foto</a>
+                <button onclick="location.reload()" class="btn-retry">Foto Lagi</button>
+            </div>
+        </div>
     </div>
-        
-        <div class="controls">
-            <button id="start-btn">Mulai (4x cekrek ya)</button>
-            <a id="download-btn" style="display: none;">unduh hasil foto cakepnya disini</a>
-        </div>
 
-  <div id="result-screen" style="display: none;">
-        <h1> Cakepnaaa giii </h1>
-        <div id="result-container">
-            <img id="final-image" alt="Hasil photobooth">
-        </div>
-        <div class="controls">
-            <a id="download-btn" class="btn-download">Simpan Foto</a>
-            <button onclick="location.reload()" class="btn-retry">Foto Lagi</button>
-        </div>
-    </div>
-
-    <canvas id="canvas" style="display:none;"></canvas>
-</div>
+    <canvas id="canvas" style="display: none;"></canvas>
 
     <script src="script.js"></script>
 </body>
