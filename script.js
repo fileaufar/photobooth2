@@ -136,13 +136,22 @@ function drawFinalCoffeeStrip() {
 }
 
 function drawFooter(ctx, w, h) {
+    // ... kode gambar teks kopi kamu ...
     ctx.fillStyle = "#4b3832";
     ctx.font = "italic bold 30px Georgia";
     ctx.textAlign = "center";
     ctx.fillText("☕ Coffee Break Moments", w / 2, h - 80);
+
+    // INI BAGIAN PENTINGNYA:
+    const finalData = canvas.toDataURL('image/png'); // Mengambil data gambar dari canvas
     
-    const finalData = canvas.toDataURL('image/png');
-    finalImage.src = finalData;
-    downloadBtn.href = finalData;
-    downloadBtn.download = "coffee-photobooth.png";
+    const finalImage = document.getElementById('final-image');
+    const downloadBtn = document.getElementById('download-btn');
+
+    finalImage.src = finalData;      // Menampilkan gambar di layar hasil
+    downloadBtn.href = finalData;     // Memasukkan data gambar ke tombol download
+    downloadBtn.download = "my-coffee-shot.png"; // Nama file saat diunduh
+    
+    // Memastikan tombol terlihat
+    downloadBtn.style.display = "inline-block"; 
 }
