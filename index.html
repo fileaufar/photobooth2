@@ -23,13 +23,19 @@
             <a id="download-btn" style="display: none;">Unduh Hasil Foto</a>
         </div>
 
-        <canvas id="canvas" style="display:none;"></canvas>
-        
+  <div id="result-screen" style="display: none;">
+        <h1>☕ Your Coffee Moment</h1>
         <div id="result-container">
-            <h3>Hasil Foto:</h3>
-            <img id="final-image" alt="Hasil photobooth akan muncul di sini">
+            <img id="final-image" alt="Hasil photobooth">
+        </div>
+        <div class="controls">
+            <a id="download-btn" class="btn-download">Simpan Foto</a>
+            <button onclick="location.reload()" class="btn-retry">Foto Lagi</button>
         </div>
     </div>
+
+    <canvas id="canvas" style="display:none;"></canvas>
+</div>
 
     <script src="script.js"></script>
 </body>
