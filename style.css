@@ -120,3 +120,35 @@ button:hover {
     25% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+/* Styling Tombol di Halaman Hasil */
+.btn-download {
+    display: inline-block;
+    background-color: #2e7d32; /* Hijau Kopi */
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.btn-retry {
+    background-color: var(--coffee-medium);
+    margin: 10px;
+}
+
+#result-screen {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#final-image {
+    max-height: 80vh; /* Agar foto tidak terlalu besar di layar */
+    border: 15px solid white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
