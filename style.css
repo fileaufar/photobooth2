@@ -56,7 +56,37 @@ video {
     color: white;
     font-style: italic;
 }
+.filter-controls {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
+.filter-btn {
+    background-color: var(--coffee-light);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.filter-btn.active {
+    border-color: var(--coffee-dark);
+    background-color: var(--coffee-medium);
+}
+
+/* Ini penting agar preview video juga berubah filternya */
+#video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    transition: filter 0.3s; /* Efek transisi halus saat ganti filter */
+}
 /* Tombol-tombol */
 button {
     background-color: var(--coffee-dark);
