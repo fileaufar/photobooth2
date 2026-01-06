@@ -83,3 +83,40 @@ button:hover {
     border-radius: 5px;
     width: fit-content;
 }
+
+/* Styling Timer/Countdown */
+#countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 120px;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* Agar tetap terlihat meski background terang */
+    z-index: 10; /* Pastikan di atas video */
+}
+
+/* Efek Kilatan Kamera (Flash) */
+#flash-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Animasi Flash */
+.flash-active {
+    animation: flash-anim 0.4s ease-out;
+}
+
+@keyframes flash-anim {
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    100% { opacity: 0; }
+}
