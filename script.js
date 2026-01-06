@@ -142,3 +142,42 @@ function drawFooter(ctx, w, h) {
     downloadBtn.download = "coffee-photobooth.png";
     downloadBtn.style.display = "block";
 }
+
+// Ambil elemen layar
+const cameraScreen = document.getElementById('camera-screen');
+const resultScreen = document.getElementById('result-screen');
+
+// ... (Simpan kode kamera, startBtn, dll tetap sama dengan sebelumnya) ...
+
+startBtn.addEventListener('click', async () => {
+    capturedPhotos = [];
+    startBtn.disabled = true;
+    startBtn.innerText = "Sesi Dimulai...";
+    
+    for (let i = 0; i < totalPhotos; i++) {
+        await startCountdown(3);
+        triggerFlash();
+        takeSnapshot();
+        
+        if (i < totalPhotos - 1) {
+            countdownEl.style.fontSize = "30px";
+            countdownEl.innerText = "Siap-siap...";
+            await wait(2000); 
+            countdownEl.style.fontSize = "120px";
+        }
+    }
+    
+    // TAMPILKAN HALAMAN BARU
+    showResultPage();
+});
+
+function showResultPage() {
+    // 1. Proses gambar ke canvas (Frame Kopi)
+    drawFinalCoffeeStrip();
+    
+    // 2. Sembunyikan layar kamera, Munculkan layar hasil
+    cameraScreen.style.display = "none";
+    resultScreen.style.display = "block";
+}
+
+// ... (Fungsi drawFinalCoffeeStrip dan drawFooter tetap sama) ...
