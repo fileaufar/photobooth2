@@ -78,36 +78,55 @@ function takeSnapshot() {
     capturedPhotos.push(tempCanvas.toDataURL('image/png'));
 }
 
+// ... (Bagian atas script tetap sama seperti sebelumnya) ...
+
 async function drawFinalStrip() {
     const ctx = canvas.getContext('2d');
     canvas.width = 500;
     canvas.height = 1600;
 
-    // Background Krem Kopi
+    // 1. Gambar Background
     ctx.fillStyle = "#fff4e6";
     ctx.fillRect(0, 0, 500, 1600);
+    
+    // 2. Gambar Border
     ctx.strokeStyle = "#4b3832";
     ctx.lineWidth = 20;
     ctx.strokeRect(10, 10, 480, 1580);
 
+    // 3. Masukkan Foto satu per satu
     for (let i = 0; i < capturedPhotos.length; i++) {
         const img = new Image();
         img.src = capturedPhotos[i];
         await new Promise(r => img.onload = r);
         
+        const xPos = 40;
+        const yPos = 60 + (i * 360);
+        const w = 420;
+        const h = 315;
+
+        // Pastikan shadow tidak ikut ter-filter
+        ctx.save();
         ctx.shadowColor = "rgba(0,0,0,0.2)";
-        ctx.shadowBlur = 10;
-        ctx.drawImage(img, 40, 60 + (i * 360), 420, 315);
+        ctx.shadowBlur = 15;
+        
+        // Terapkan filter yang dipilih saat ini ke konteks canvas
+        ctx.filter = currentFilter; 
+        
+        ctx.drawImage(img, xPos, yPos, w, h);
+        ctx.restore(); // Kembalikan ke settingan awal (tanpa filter) untuk foto berikutnya
     }
 
-    // Teks Footer
+    // 4. Tambahkan Teks Footer dengan Font Poppins
     ctx.fillStyle = "#4b3832";
-    ctx.font = "bold italic 25px Georgia";
+    // Gunakan font Poppins (pastikan sudah diload di HTML)
+    ctx.font = "bold italic 25px Poppins"; 
     ctx.textAlign = "center";
     ctx.fillText("☕ Everyone Has Their Own Space", 250, 1540);
 
+    // 5. Konversi ke Data URL untuk Download
     const finalData = canvas.toDataURL('image/png');
     finalImage.src = finalData;
     downloadBtn.href = finalData;
-    downloadBtn.download = "coffee_booth_result.png";
+    downloadBtn.download = "coffee_photobooth_poppins.png";
 }
