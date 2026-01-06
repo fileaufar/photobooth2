@@ -40,6 +40,40 @@ startBtn.addEventListener('click', async () => {
             countdownEl.style.fontSize = "120px"; // Balikkan ke ukuran besar untuk angka
         }
     }
+    // ... (variabel yang sudah ada sebelumnya) ...
+const filterBtns = document.querySelectorAll('.filter-btn');
+let currentFilter = "none";
+
+// Logika Ganti Filter
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Hapus class active dari tombol lain
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Simpan filter yang dipilih dan terapkan ke video preview
+        currentFilter = btn.getAttribute('data-filter');
+        video.style.filter = currentFilter;
+    });
+});
+
+function takeSnapshot() {
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCanvas.width = 800;
+    tempCanvas.height = 600;
+
+    // TERAPKAN FILTER KE CANVAS
+    tempCtx.filter = currentFilter;
+
+    // Mirroring & Draw
+    tempCtx.translate(tempCanvas.width, 0);
+    tempCtx.scale(-1, 1);
+    tempCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
+    
+    capturedPhotos.push(tempCanvas.toDataURL('image/png'));
+}
+
     
     // 5. Proses jadi Frame Kopi
     drawFinalCoffeeStrip();
