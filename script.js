@@ -82,51 +82,61 @@ function takeSnapshot() {
 
 async function drawFinalStrip() {
     const ctx = canvas.getContext('2d');
+    
+    // Ukuran Strip
     canvas.width = 500;
     canvas.height = 1600;
 
-    // 1. Gambar Background
+    // 1. Background
     ctx.fillStyle = "#fff4e6";
-    ctx.fillRect(0, 0, 500, 1600);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // 2. Gambar Border
+    // 2. Border Cokelat
     ctx.strokeStyle = "#4b3832";
     ctx.lineWidth = 20;
     ctx.strokeRect(10, 10, 480, 1580);
 
-    // 3. Masukkan Foto satu per satu
+    // 3. Gambar Foto dengan Filter
     for (let i = 0; i < capturedPhotos.length; i++) {
         const img = new Image();
         img.src = capturedPhotos[i];
-        await new Promise(r => img.onload = r);
         
-        const xPos = 40;
-        const yPos = 60 + (i * 360);
-        const w = 420;
-        const h = 315;
-
-        // Pastikan shadow tidak ikut ter-filter
-        ctx.save();
-        ctx.shadowColor = "rgba(0,0,0,0.2)";
-        ctx.shadowBlur = 15;
-        
-        // Terapkan filter yang dipilih saat ini ke konteks canvas
-        ctx.filter = currentFilter; 
-        
-        ctx.drawImage(img, xPos, yPos, w, h);
-        ctx.restore(); // Kembalikan ke settingan awal (tanpa filter) untuk foto berikutnya
+        await new Promise(resolve => {
+            img.onload = () => {
+                const xPos = 40;
+                const yPos = 60 + (i * 360);
+                
+                ctx.save(); // Simpan state canvas
+                
+                // --- KUNCI FILTER: Terapkan filter ke konteks canvas utama ---
+                ctx.filter = currentFilter; 
+                
+                // Beri sedikit shadow agar aesthetic
+                ctx.shadowColor = "rgba(0,0,0,0.2)";
+                ctx.shadowBlur = 10;
+                
+                ctx.drawImage(img, xPos, yPos, 420, 315);
+                
+                ctx.restore(); // Kembalikan ke normal agar teks tidak ikut ter-filter
+                resolve();
+            };
+        });
     }
 
-    // 4. Tambahkan Teks Footer dengan Font Poppins
+    // 4. KUNCI FONT: Pastikan Font Poppins sudah siap sebelum menggambar teks
+    await document.fonts.ready; 
+    
     ctx.fillStyle = "#4b3832";
-    // Gunakan font Poppins (pastikan sudah diload di HTML)
-    ctx.font = "bold italic 25px Poppins"; 
     ctx.textAlign = "center";
-    ctx.fillText("☕ Everyone Has Their Own Space", 250, 1540);
+    ctx.font = "bold 28px Poppins"; // Font Poppins dipanggil di sini
+    ctx.fillText("☕ COFFEE BREAK MOMENTS", 250, 1530);
+    
+    ctx.font = "400 18px Poppins";
+    ctx.fillText("Captured at My Online Booth", 250, 1560);
 
-    // 5. Konversi ke Data URL untuk Download
+    // 5. Generate Hasil Akhir
     const finalData = canvas.toDataURL('image/png');
     finalImage.src = finalData;
     downloadBtn.href = finalData;
-    downloadBtn.download = "coffee_photobooth_poppins.png";
+    downloadBtn.download = "coffee_booth_poppins.png";
 }
