@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Photo Booth</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>📸 My Photo Booth</h1>
+        
+        <div class="booth-wrapper">
+            <video id="video" autoplay playsinline></video>
+            <div id="frame-overlay"></div>
+            <div id="countdown"></div>
+        </div>
+
+        <div class="controls">
+            <button id="start-btn">Mulai Foto (4x)</button>
+            <a id="download-btn" style="display: none;">Unduh Hasil Foto</a>
+        </div>
+
+        <canvas id="canvas" style="display:none;"></canvas>
+        
+        <div id="result-container">
+            <h3>Hasil Foto:</h3>
+            <img id="final-image" alt="Hasil photobooth akan muncul di sini">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
