@@ -131,10 +131,10 @@ function drawFooter(ctx, w, h) {
     ctx.fillStyle = "#4b3832";
     ctx.font = "italic bold 30px Georgia";
     ctx.textAlign = "center";
-    ctx.fillText("☕ Coffee Break Moments", w / 2, h - 80);
+    ctx.fillText("☕ cakepnaaa giii", w / 2, h - 80);
     
     ctx.font = "18px Arial";
-    ctx.fillText("Captured with Online Photobooth", w / 2, h - 50);
+    ctx.fillText("Captured with love", w / 2, h - 50);
 
     const finalData = canvas.toDataURL('image/png');
     finalImage.src = finalData;
